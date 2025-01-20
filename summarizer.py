@@ -27,7 +27,7 @@ def summarize_large_pdf(pdf_content, summarizer, max_length=60, min_length=1, nu
   with ThreadPoolExecutor(max_workers=num_threads) as executor:
     summaries = list(executor.map(lambda part: summarizer(part, max_length=max_length, min_length=min_length, do_sample=False)[0]["summary_text"], parts))
 
-  return " ".join(summaries)
+  return "".join(summaries)
 
 def output(text, output_file=None):
   print(text)
