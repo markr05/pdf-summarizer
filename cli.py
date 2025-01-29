@@ -1,5 +1,5 @@
 import argparse
-import summarizer
+import pdf_processing
 import time
 
 def parse_arguments():
@@ -18,7 +18,18 @@ def parse_arguments():
   pdf_summarizer.add_argument('--min_length', help='Minimum length of the summarization section (default=1)', default=1, required=False)
   pdf_summarizer.add_argument('-s', '--start', help='Starting phrase of the summarization', default=None, required=False)
   pdf_summarizer.add_argument('-e', '--end', help='Ending phrase of the summarization', default=None, required=False)
-  pdf_summarizer.set_defaults(func=summarizer.summarize)
+  pdf_summarizer.add_argument('-sp', '--starting_page', help='Starting page of the summarization', default=None, required=False)
+  pdf_summarizer.add_argument('-ep', '--ending_page', help='Ending page of the summarization', default=None, required=False)
+  pdf_summarizer.set_defaults(func=pdf_processing.summarize)
+
+  pdf_extractor = subparsers.add_parser("extract", help="Takes a pdf and outputs the text")
+  pdf_extractor.add_argument('-f', '--file', help='Path to the pdf file', required=True)
+  pdf_extractor.add_argument('-o', '--output', help='Output file (prints the output by default)', default=None, required=False)
+  pdf_extractor.add_argument('-s', '--start', help='Starting phrase of the extraction', default=None, required=False)
+  pdf_extractor.add_argument('-e', '--end', help='Ending phrase of the extraction', default=None, required=False)
+  pdf_extractor.add_argument('-sp', '--starting_page', help='Starting page of the extraction', default=None, required=False)
+  pdf_extractor.add_argument('-ep', '--ending_page', help='Ending page of the extraction', default=None, required=False)
+  pdf_extractor.set_defaults(func=pdf_processing.extract_pdf_section)
 
   return parser.parse_args()
 
@@ -27,7 +38,7 @@ def main():
   if args.timer:
     start_time = time.time()
     args.func(args)
-    print(f"The function took {time.time() - start_time:.2f}second(s) to complete. ")
+    print(f"\nThe function took {time.time() - start_time:.2f}second(s) to complete. ")
     return
   args.func(args)
 
