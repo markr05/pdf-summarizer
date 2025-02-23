@@ -20,6 +20,7 @@ def parse_arguments():
   pdf_summarizer.add_argument('-e', '--end', help='Ending phrase of the summarization', default=None, required=False)
   pdf_summarizer.add_argument('-sp', '--starting_page', help='Starting page of the summarization', default=None, required=False)
   pdf_summarizer.add_argument('-ep', '--ending_page', help='Ending page of the summarization', default=None, required=False)
+  pdf_summarizer.add_argument('-b', '--batch_size', help='The batch size of the summarization', default=4, required=False)
   pdf_summarizer.set_defaults(func=pdf_processing.summarize)
 
   pdf_extractor = subparsers.add_parser("extract", help="Takes a pdf and outputs the text")
